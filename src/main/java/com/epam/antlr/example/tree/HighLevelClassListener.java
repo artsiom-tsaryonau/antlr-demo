@@ -14,54 +14,46 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * Probably can be done via visitors.
  */
 public class HighLevelClassListener  extends Java8BaseListener {
-
-    private Stack<DefaultMutableTreeNode> nodeStack = new Stack<>();
-
+    private ParsingContext parsingContext;
     public HighLevelClassListener(DefaultMutableTreeNode root) {
-        nodeStack.push(root);
+        parsingContext = new ParsingContext(root);
     }
 
     // ---- package
 
     @Override
     public void enterPackageDeclaration(PackageDeclarationContext ctx) {
-        DefaultMutableTreeNode packageNode = new DefaultMutableTreeNode(ctx.packageName().getText());
-        nodeStack.peek().add(packageNode);
-        nodeStack.push(packageNode);
+        parsingContext.aroundEnter(ctx.packageName().getText());
     }
 
     // ---- class declaration
 
     @Override
     public void enterNormalClassDeclaration(NormalClassDeclarationContext ctx) {
-        DefaultMutableTreeNode classNode = new DefaultMutableTreeNode(ctx.Identifier().getText());
-        nodeStack.peek().add(classNode);
-        nodeStack.push(classNode);
+        parsingContext.aroundEnter(ctx.Identifier().getText());
     }
 
     @Override
     public void exitNormalClassDeclaration(NormalClassDeclarationContext ctx) {
-        nodeStack.pop();
+        parsingContext.aroundExit();
     }
 
     // ---- method declaration
 
     @Override
     public void enterMethodDeclarator(MethodDeclaratorContext ctx) {
-        DefaultMutableTreeNode methodNode = new DefaultMutableTreeNode(ctx.Identifier().getText());
-        nodeStack.peek().add(methodNode);
-        nodeStack.push(methodNode);
+        parsingContext.aroundEnter(ctx.Identifier().getText());
     }
 
     @Override
     public void exitMethodDeclarator(MethodDeclaratorContext ctx) {
-        nodeStack.pop();
+        parsingContext.aroundExit();
     }
 
     // ----- finalize
 
     @Override
     public void exitCompilationUnit(CompilationUnitContext ctx) {
-        nodeStack.clear(); // clear stack (for no reason) after leaving the compilation unit
+        parsingContext.clearContext();
     }
 }
