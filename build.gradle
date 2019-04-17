@@ -1,0 +1,19 @@
+apply plugin: 'application'
+apply plugin: 'antlr'
+
+repositories {
+    jcenter()
+}
+
+mainClassName = 'com.epam.antlr.example.Main'
+
+dependencies {
+    antlr "org.antlr:antlr4:4.7.2"
+    compile "org.antlr:antlr4-runtime:4.7.2"
+}
+
+// gradlew generateGrammarSource for class generation
+generateGrammarSource {
+    arguments += ["-visitor"]
+}
+
