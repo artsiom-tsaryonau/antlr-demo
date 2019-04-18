@@ -17,7 +17,7 @@ public class ParsingContext {
         aroundEnter(node);
     }
 
-    private void aroundEnter(DefaultMutableTreeNode node) {
+    public void aroundEnter(DefaultMutableTreeNode node) {
         nodeStack.peek().add(node);
         nodeStack.push(node);
     }
