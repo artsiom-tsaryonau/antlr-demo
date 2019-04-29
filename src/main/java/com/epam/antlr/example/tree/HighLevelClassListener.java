@@ -78,7 +78,7 @@ public class HighLevelClassListener  extends Java8BaseListener {
 
     @Override
     public void enterMethodHeader(MethodHeaderContext ctx) {
-        parsingContext.aroundEnter(new DefaultMutableTreeNode("method signature ->"));
+        parsingContext.aroundEnter(new DefaultMutableTreeNode("method signature"));
     }
 
     @Override
@@ -101,7 +101,7 @@ public class HighLevelClassListener  extends Java8BaseListener {
     @Override
     public void enterFormalParameterList(FormalParameterListContext ctx) {
         // technically can move to higher level
-        parsingContext.aroundEnter(new DefaultMutableTreeNode("method parameters ->"));
+        parsingContext.aroundEnter(new DefaultMutableTreeNode("method parameters"));
     }
 
     @Override
@@ -171,27 +171,27 @@ public class HighLevelClassListener  extends Java8BaseListener {
 
     @Override
     public void exitMethodInvocation(MethodInvocationContext ctx) {
-        if (!noExit) {
+        // if (!noExit) {
             parsingContext.aroundExit();
-        }
+        // }
     }
 
     // ---- method call like system.out.print
 
     @Override
     public void enterTypeName(TypeNameContext ctx) { // method invocation with type like System.out
-        parsingContext.aroundEnter("static-reference: " + ctx.Identifier().getText());
-        parsingContext.aroundExit();
+        // parsingContext.aroundEnter("static-reference: " + ctx.Identifier().getText());
+        // parsingContext.aroundExit();
     }
 
     @Override
     public void enterPackageOrTypeName(PackageOrTypeNameContext ctx) {
-        parsingContext.aroundEnter("method-package: " + ctx.Identifier().getText());
+        // parsingContext.aroundEnter("method-package: " + ctx.Identifier().getText());
     }
 
     @Override
     public void exitPackageOrTypeName(PackageOrTypeNameContext ctx) {
-        parsingContext.aroundExit();
+        // parsingContext.aroundExit();
     }
 
     // ---- plain method call

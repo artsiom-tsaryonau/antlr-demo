@@ -9,4 +9,8 @@ public class SampleClass {
     public void secondMethod(String name) {
         firstMethod(name, null);
     }
+
+    public void thirdMethod() {
+        System.out.println("Hello, world");
+    }
 }
