@@ -10,6 +10,9 @@ mainClassName = 'com.epam.antlr.example.Main'
 dependencies {
     antlr "org.antlr:antlr4:4.7.2"
     compile "org.antlr:antlr4-runtime:4.7.2"
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.6'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.6'
 }
 
 // gradlew generateGrammarSource for class generation
