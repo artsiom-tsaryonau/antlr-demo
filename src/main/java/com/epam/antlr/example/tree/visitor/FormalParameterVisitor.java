@@ -1,7 +1,8 @@
-package com.epam.antlr.example.node;
+package com.epam.antlr.example.tree.visitor;
 
 import com.epam.antlr.core.Java8BaseVisitor;
 import com.epam.antlr.core.Java8Parser.FormalParameterContext;
+import com.epam.antlr.example.node.ParameterNode;
 import com.epam.antlr.example.node.api.IASTNode;
 
 /**

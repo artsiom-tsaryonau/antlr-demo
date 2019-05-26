@@ -3,7 +3,6 @@ package com.epam.antlr.example.tree.visitor;
 import com.epam.antlr.core.Java8BaseVisitor;
 import com.epam.antlr.core.Java8Parser.MethodDeclaratorContext;
 import com.epam.antlr.core.Java8Parser.MethodHeaderContext;
-import com.epam.antlr.example.node.FormalParameterVisitor;
 import com.epam.antlr.example.node.MethodDeclarationNode;
 import com.epam.antlr.example.node.ParameterNode;
 import com.epam.antlr.example.node.api.IASTNode;

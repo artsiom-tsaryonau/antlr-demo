@@ -1,7 +1,6 @@
 package com.epam.antlr.example.tree.visitor;
 
 import com.epam.antlr.core.Java8Parser.LastFormalParameterContext;
-import com.epam.antlr.example.node.FormalParameterVisitor;
 import com.epam.antlr.example.node.api.IASTNode;
 
 /**

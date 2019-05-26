@@ -2,18 +2,20 @@ package com.epam.antlr.example.node;
 
 import com.epam.antlr.example.node.api.IASTNode;
 
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class MethodDeclarationNode implements IASTNode {
+@NodeEntity(label = "method")
+public class MethodDeclarationNode extends IASTNode {
     private String methodName;
+    @Relationship(type = "PARAMETER")
     private List<ParameterNode> parameters = new ArrayList<>();
-
-    @Override
-    public String getContent() {
-        return methodName;
-    }
 }

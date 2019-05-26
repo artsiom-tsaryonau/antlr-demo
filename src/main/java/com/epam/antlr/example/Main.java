@@ -9,6 +9,9 @@ import com.epam.antlr.example.tree.visitor.CompilationUnitVisitor;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.neo4j.ogm.config.Configuration;
+import org.neo4j.ogm.session.Session;
+import org.neo4j.ogm.session.SessionFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,5 +42,14 @@ public class Main {
 
 
         // we can store it now in DB
+        Configuration configuration = new Configuration.Builder()
+            .uri("bolt://localhost")
+            .credentials("neo4j", "password")
+            .build();
+
+        SessionFactory sessionFactory = new SessionFactory(configuration, "com.epam.antlr.example.node");
+        Session session = sessionFactory.openSession();
+        session.save(rootNode);
+        sessionFactory.close(); // need to close that
     }
 }
