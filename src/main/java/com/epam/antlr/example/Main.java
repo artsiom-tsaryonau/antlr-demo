@@ -2,15 +2,16 @@ package com.epam.antlr.example;
 
 import com.epam.antlr.core.Java8Lexer;
 import com.epam.antlr.core.Java8Parser;
-import com.epam.antlr.example.node.IASTNode;
-import com.epam.antlr.example.tree.HighLevelClassVisitor;
+import com.epam.antlr.example.node.NormalClassDeclarationNode;
+import com.epam.antlr.example.node.CompilationUnitNode;
+import com.epam.antlr.example.node.PackageDeclarationNode;
+import com.epam.antlr.example.tree.visitor.CompilationUnitVisitor;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 
 public class Main {
 
@@ -21,22 +22,22 @@ public class Main {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         Java8Parser parser = new Java8Parser(tokens);
 
-        HighLevelClassVisitor visitor = new HighLevelClassVisitor();
+        CompilationUnitNode rootNode = new CompilationUnitNode();
+        rootNode.setFilename("simplest-example.java");
 
-        // follows the order
+        // visit package declaration
+        CompilationUnitVisitor rootVisitor = new CompilationUnitVisitor();
+        PackageDeclarationNode packageDeclarationNode =
+            (PackageDeclarationNode) rootVisitor.visitPackageDeclaration(parser.packageDeclaration());
+        rootNode.setPackageNode(packageDeclarationNode);
 
-        IASTNode node = visitor.visitPackageDeclaration(parser.packageDeclaration());
-        System.out.println(node.getContent());
-
-        node = visitor.visitNormalClassDeclaration(parser.normalClassDeclaration());
-        System.out.println(node.getContent());
-
-        node = visitor.visitMethodDeclarator(parser.methodDeclarator());
-        System.out.println(node.getContent());
-
-        node = visitor.visitFormalParameterList(parser.formalParameterList());
-        System.out.println(node.getContent());
+        // 100% guarantee that it will be normal class. Not interface, nor enum.
+        // in real-world has to do some checks.
+        NormalClassDeclarationNode normalClassDeclarationNode =
+            (NormalClassDeclarationNode) rootVisitor.visitTypeDeclaration(parser.typeDeclaration());
+        rootNode.setClassNode(normalClassDeclarationNode);
 
 
+        // we can store it now in DB
     }
 }

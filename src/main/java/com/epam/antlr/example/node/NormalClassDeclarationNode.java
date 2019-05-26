@@ -8,12 +8,12 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class MethodDeclarationNode implements IASTNode {
-    private String methodName;
-    private List<ParameterNode> parameters = new ArrayList<>();
+public class NormalClassDeclarationNode implements IASTNode {
+    private String className;
+    private List<MethodDeclarationNode> methods = new ArrayList<>();
 
     @Override
     public String getContent() {
-        return methodName;
+        return className;
     }
 }
