@@ -14,8 +14,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NodeEntity(label = "method")
-public class MethodDeclarationNode extends IASTNode {
+public class MethodDeclaratorNode extends IASTNode {
     private String methodName;
     @Relationship(type = "PARAMETER")
     private List<ParameterNode> parameters = new ArrayList<>();
+    @Relationship(type = "METHOD_INVOCATION")
+    private List<MethodInvocationNode> invocations = new ArrayList<>();
 }

@@ -17,5 +17,5 @@ import lombok.EqualsAndHashCode;
 public class NormalClassDeclarationNode extends IASTNode {
     private String className;
     @Relationship(type = "METHOD")
-    private List<MethodDeclarationNode> methods = new ArrayList<>();
+    private List<MethodDeclaratorNode> methods = new ArrayList<>();
 }

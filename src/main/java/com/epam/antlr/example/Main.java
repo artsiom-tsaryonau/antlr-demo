@@ -40,7 +40,6 @@ public class Main {
             (NormalClassDeclarationNode) rootVisitor.visitTypeDeclaration(parser.typeDeclaration());
         rootNode.setClassNode(normalClassDeclarationNode);
 
-
         // we can store it now in DB
         Configuration configuration = new Configuration.Builder()
             .uri("bolt://localhost")

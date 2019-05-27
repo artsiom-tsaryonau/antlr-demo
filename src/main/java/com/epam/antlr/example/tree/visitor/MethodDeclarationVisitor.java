@@ -1,9 +1,14 @@
 package com.epam.antlr.example.tree.visitor;
 
 import com.epam.antlr.core.Java8BaseVisitor;
+import com.epam.antlr.core.Java8Parser;
 import com.epam.antlr.core.Java8Parser.MethodDeclarationContext;
 import com.epam.antlr.core.Java8Parser.MethodHeaderContext;
+import com.epam.antlr.example.node.IntermediateMethodBodyNode;
+import com.epam.antlr.example.node.MethodDeclaratorNode;
 import com.epam.antlr.example.node.api.IASTNode;
+
+import java.util.ArrayList;
 
 /**
  * Method declaration
@@ -18,11 +23,23 @@ public class MethodDeclarationVisitor extends Java8BaseVisitor<IASTNode> {
 
     @Override
     public IASTNode visitMethodDeclaration(MethodDeclarationContext ctx) {
-        return visitMethodHeader(ctx.methodHeader());
+        IntermediateMethodBodyNode methodBodyNode =
+            (IntermediateMethodBodyNode) visitMethodBody(ctx.methodBody());
+        MethodDeclaratorNode methodDeclaratorNode =
+            (MethodDeclaratorNode) visitMethodHeader(ctx.methodHeader());
+        methodDeclaratorNode.setInvocations(new ArrayList<>(methodBodyNode.getMethodInvocations()));
+        return methodDeclaratorNode;
     }
 
     @Override
     public IASTNode visitMethodHeader(MethodHeaderContext ctx) {
+        // method always have a single header
         return new MethodHeaderVisitor().visitMethodHeader(ctx);
+    }
+
+    @Override
+    public IASTNode visitMethodBody(Java8Parser.MethodBodyContext ctx) {
+        // method body can have 0+ expressions
+        return new MethodBodyVisitor().visitMethodBody(ctx);
     }
 }

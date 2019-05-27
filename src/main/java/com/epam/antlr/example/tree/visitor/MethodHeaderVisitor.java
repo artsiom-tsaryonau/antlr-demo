@@ -3,7 +3,7 @@ package com.epam.antlr.example.tree.visitor;
 import com.epam.antlr.core.Java8BaseVisitor;
 import com.epam.antlr.core.Java8Parser.MethodDeclaratorContext;
 import com.epam.antlr.core.Java8Parser.MethodHeaderContext;
-import com.epam.antlr.example.node.MethodDeclarationNode;
+import com.epam.antlr.example.node.MethodDeclaratorNode;
 import com.epam.antlr.example.node.ParameterNode;
 import com.epam.antlr.example.node.api.IASTNode;
 
@@ -29,7 +29,7 @@ public class MethodHeaderVisitor extends Java8BaseVisitor<IASTNode> {
 
     @Override
     public IASTNode visitMethodDeclarator(MethodDeclaratorContext ctx) {
-        MethodDeclarationNode method = new MethodDeclarationNode();
+        MethodDeclaratorNode method = new MethodDeclaratorNode();
         method.setMethodName(ctx.Identifier().getText());
 
         FormalParameterVisitor formalParameterVisitor = new FormalParameterVisitor();
