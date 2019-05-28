@@ -9,6 +9,7 @@ import com.epam.antlr.example.node.MethodDeclaratorNode;
 import com.epam.antlr.example.node.api.IASTNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Method declaration
@@ -27,7 +28,12 @@ public class MethodDeclarationVisitor extends Java8BaseVisitor<IASTNode> {
             (IntermediateMethodBodyNode) visitMethodBody(ctx.methodBody());
         MethodDeclaratorNode methodDeclaratorNode =
             (MethodDeclaratorNode) visitMethodHeader(ctx.methodHeader());
-        methodDeclaratorNode.setInvocations(new ArrayList<>(methodBodyNode.getMethodInvocations()));
+
+        if (methodBodyNode.getMethodInvocations() == null) {
+            methodDeclaratorNode.setInvocations(Collections.emptyList());
+        } else {
+            methodDeclaratorNode.setInvocations(new ArrayList<>(methodBodyNode.getMethodInvocations()));
+        }
         return methodDeclaratorNode;
     }
 
