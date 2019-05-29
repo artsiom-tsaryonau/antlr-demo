@@ -15,6 +15,7 @@ import org.neo4j.ogm.session.SessionFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 
 public class Main {
 
@@ -40,10 +41,13 @@ public class Main {
             (NormalClassDeclarationNode) rootVisitor.visitTypeDeclaration(parser.typeDeclaration());
         rootNode.setClassNode(normalClassDeclarationNode);
 
+        Properties props = new Properties();
+        props.load(Main.class.getResourceAsStream("/app.properties"));
+
         // we can store it now in DB
         Configuration configuration = new Configuration.Builder()
-            .uri("bolt://localhost")
-            .credentials("neo4j", "password")
+            .uri(props.getProperty("neo4j.host"))
+            .credentials(props.getProperty("neo4j.login"), props.getProperty("neo4j.password"))
             .build();
 
         SessionFactory sessionFactory = new SessionFactory(configuration, "com.epam.antlr.example.node");
